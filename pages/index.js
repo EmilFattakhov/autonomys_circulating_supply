@@ -75,7 +75,7 @@ export default function TokenInfo() {
           <p style={{ margin: '5px 0 0 0', fontSize: '0.9rem', opacity: 0.9 }}>
             {formatPercent(tokenData.currentCirculating)}% of total
             {tokenData.currentCirculating === 0 && (
-              <><br /><small>Transfers disabled until TGE</small></>
+              <><br /><small>TGE completed - transfers enabled</small></>
             )}
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function TokenInfo() {
             </h3>
             <p><strong>{formatNumber(215_300_000)} tokens</strong></p>
             <p style={{ color: '#6b7280', fontSize: '0.95rem' }}>
-              48-month lockup with 12-month cliff. 25% unlocked after cliff, 
+              48-month lockup with 12-month cliff from TGE (July 16, 2025). 25% unlocked July 16, 2026, 
               remaining 75% released linearly over 36 months.
             </p>
           </div>
@@ -137,7 +137,7 @@ export default function TokenInfo() {
               <p>• <strong>Staff:</strong> {formatNumber(51_400_000)} tokens (5.14%)</p>
             </div>
             <p style={{ color: '#6b7280', fontSize: '0.95rem' }}>
-              Same vesting schedule as investors: 12-month cliff, then linear release over 36 months.
+              Same vesting schedule: 12-month cliff from TGE (completed July 16, 2026), then linear release over 36 months.
             </p>
           </div>
 
@@ -219,8 +219,8 @@ export default function TokenInfo() {
             </h3>
             <p><strong>{formatNumber(350_000_000)} tokens</strong></p>
             <p style={{ color: '#6b7280', fontSize: '0.95rem' }}>
-              Minted as block rewards over ~40 years using dynamic issuance model 
-              developed with BlockScience. Currently issued: {formatNumber(calculateFarmingRewards(currentDate))} tokens.
+              Minted as block rewards over ~40 years using BlockScience dynamic issuance model. 
+              Rewards activated November 26, 2024. Currently issued: {formatNumber(calculateFarmingRewards(currentDate))} tokens.
             </p>
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function TokenInfo() {
             <strong>Token Transferability:</strong> Disabled at protocol level until TGE (Mainnet Phase-2)
           </li>
           <li style={{ marginBottom: '10px' }}>
-            <strong>TGE Expected:</strong> Q2 2025 with Mainnet Phase-2 launch
+            <strong>TGE date:</strong>  Mainnet Phase-2 launch (enabled transferability) on July 16, 2025.
           </li>
           <li style={{ marginBottom: '10px' }}>
             <strong>Block Time:</strong> {BLOCK_TIME_SECONDS} seconds per block
@@ -268,7 +268,6 @@ export default function TokenInfo() {
         borderTop: '1px solid #e5e7eb',
         color: '#6b7280'
       }}>
-        <p>Last updated: {new Date().toLocaleDateString()}</p>
         <p>
           <a 
             href="/api/circulating-supply" 
