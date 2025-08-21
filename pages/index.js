@@ -39,7 +39,72 @@ export default function TokenInfo() {
         <p style={{ fontSize: '1.2rem', color: '#6b7280' }}>
           Autonomys Network Native Token Overview
         </p>
+        <div style={{ marginTop: '20px' }}>
+          <a 
+            href="https://subspace.foundation/tokenomics" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              color: '#2563eb', 
+              textDecoration: 'none',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              border: '2px solid #2563eb',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              display: 'inline-block',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = '#2563eb';
+              e.target.style.color = 'white';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.color = '#2563eb';
+            }}
+          >
+            📊 Official Tokenomics published by the Subspace Foundation (Source of Truth) →
+          </a>
+        </div>
       </header>
+
+      {/* RPC vs Circulating Supply Explanation */}
+      <section style={{ 
+        background: '#fef3c7', 
+        border: '2px solid #f59e0b',
+        borderRadius: '12px',
+        padding: '25px',
+        marginBottom: '40px'
+      }}>
+        <h2 style={{ 
+          fontSize: '1.3rem', 
+          marginBottom: '15px', 
+          color: '#92400e',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px'
+        }}>
+          ⚠️ Important: RPC vs Circulating Supply Difference
+        </h2>
+        <p style={{ color: '#92400e', marginBottom: '15px' }}>
+          <strong>Why RPC queries show different numbers:</strong>
+        </p>
+        <div style={{ background: 'rgba(255,255,255,0.7)', padding: '20px', borderRadius: '8px' }}>
+          <p style={{ margin: '0 0 10px 0', color: '#1f2937' }}>
+            • <strong>RPC/Consensus Layer:</strong> Shows all minted tokens (~650M+ tokens exist on-chain)
+          </p>
+          <p style={{ margin: '0 0 10px 0', color: '#1f2937' }}>
+            • <strong>Circulating Supply:</strong> Only counts tokens that can actually be transferred
+          </p>
+          <p style={{ margin: '0 0 10px 0', color: '#1f2937' }}>
+            • <strong>Key Difference:</strong> Most tokens are locked on the EVM layer with smart contracts, even though they appear "unlocked" on the consensus layer
+          </p>
+          <p style={{ margin: '0', color: '#1f2937' }}>
+            • <strong>Before TGE:</strong> ALL tokens are locked at protocol level (transfers disabled)
+          </p>
+        </div>
+      </section>
 
       {/* Summary Cards */}
       <div style={{ 
@@ -75,7 +140,7 @@ export default function TokenInfo() {
           <p style={{ margin: '5px 0 0 0', fontSize: '0.9rem', opacity: 0.9 }}>
             {formatPercent(tokenData.currentCirculating)}% of total
             {tokenData.currentCirculating === 0 && (
-              <><br /><small>TGE completed - transfers enabled</small></>
+              <><br /><small>TGE pending - transfers disabled</small></>
             )}
           </p>
         </div>
@@ -268,13 +333,24 @@ export default function TokenInfo() {
         borderTop: '1px solid #e5e7eb',
         color: '#6b7280'
       }}>
-        <p>
+        <div style={{ marginBottom: '20px' }}>
           <a 
-            href="/api/circulating-supply" 
-            style={{ color: '#2563eb', textDecoration: 'none' }}
+            href="https://subspace.foundation/tokenomics" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              color: '#2563eb', 
+              textDecoration: 'none',
+              marginRight: '30px',
+              fontSize: '1.1rem'
+            }}
           >
-            View JSON API →
+            📊 Official Tokenomics →
           </a>
+        </div>
+        <p style={{ fontSize: '0.9rem', marginTop: '15px' }}>
+          <strong>Note:</strong> API uses POST requests with real-time calculations. 
+          Send POST to /api/circulating-supply for current data.
         </p>
       </footer>
     </div>

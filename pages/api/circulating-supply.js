@@ -1,20 +1,41 @@
 import { calculateCirculatingSupply, TGE_DATE } from '../../lib/tokenCalculations';
 
 export default function handler(req, res) {
-  // Set CORS headers
+  // Set CORS headers for POST requests
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ 
+      error: 'Method not allowed',
+      message: 'This endpoint only accepts POST requests'
+    });
   }
 
   try {
-    const currentDate = new Date();
+    // Use current time at the moment of request
+    const requestTime = new Date();
     const tgeDate = TGE_DATE; // July 16, 2025 12:30PM EST
     
-    const circulatingSupply = calculateCirculatingSupply(currentDate, tgeDate);
+    // Allow optional date override in request body for testing/historical data
+    const { date: customDate } = req.body || {};
+    const calculationDate = customDate ? new Date(customDate) : requestTime;
+    
+    // Validate custom date if provided
+    if (customDate && isNaN(calculationDate.getTime())) {
+      return res.status(400).json({
+        error: 'Invalid date format',
+        message: 'Please provide date in ISO 8601 format (e.g., "2025-08-21T12:00:00Z")'
+      });
+    }
+    
+    const circulatingSupply = calculateCirculatingSupply(calculationDate, tgeDate);
     const totalSupply = 1_000_000_000;
     const lockedSupply = totalSupply - circulatingSupply;
 
@@ -23,10 +44,12 @@ export default function handler(req, res) {
       circulating_supply: circulatingSupply,
       locked_supply: lockedSupply,
       circulating_percentage: ((circulatingSupply / totalSupply) * 100).toFixed(2),
-      last_updated: currentDate.toISOString(),
+      calculation_date: calculationDate.toISOString(),
+      request_time: requestTime.toISOString(),
       block_time_seconds: 6,
       tge_date: tgeDate.toISOString(),
-      tge_occurred: currentDate >= tgeDate
+      tge_occurred: calculationDate >= tgeDate,
+      note: "Calculated at request time. For historical data, include 'date' in request body."
     };
 
     res.status(200).json(response);
