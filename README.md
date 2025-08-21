@@ -9,11 +9,11 @@ npm install
 npm run dev
 ```
 
-Visit `http://localhost:3000`
+Visit `https://autonomys-circulating-supply.vercel.app/`
 
 ## API
 
-**POST** `/api/circulating-supply`
+**POST** `https://autonomys-circulating-supply.vercel.app/api/circulating-supply`
 
 ```bash
 # Current data

@@ -45,11 +45,7 @@ export default function handler(req, res) {
       locked_supply: lockedSupply,
       circulating_percentage: ((circulatingSupply / totalSupply) * 100).toFixed(2),
       calculation_date: calculationDate.toISOString(),
-      request_time: requestTime.toISOString(),
-      block_time_seconds: 6,
-      tge_date: tgeDate.toISOString(),
-      tge_occurred: calculationDate >= tgeDate,
-      note: "Calculated at request time. For historical data, include 'date' in request body."
+      request_time: requestTime.toISOString()
     };
 
     res.status(200).json(response);
